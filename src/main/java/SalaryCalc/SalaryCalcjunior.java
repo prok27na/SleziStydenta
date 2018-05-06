@@ -93,3 +93,89 @@ public class SalaryCalcjunior implements ActionListener{
         frame.setResizable(false); //запрещаем изменение размеров главного окна
         
     }
+	
+	
+	//метод добавления текстовых меток
+    public void addLabel(JComponent container, String name, Color color){
+        //создаем тестовую метку с именем name
+        JLabel lb = new JLabel(name);
+        //устанавливаем максимально допустимый размер
+        lb.setMaximumSize(new Dimension(400,20));
+        //устанавливаем цвета текста
+        lb.setForeground(color);
+        //устанавливаем выравнивание по правому краю
+        lb.setHorizontalAlignment(JLabel.RIGHT);
+        //добавляем рамку
+        lb.setBorder(new EtchedBorder());
+        //Добавляем текстовую метку в панель
+        container.add(lb);
+    }
+    
+    //метод добавления текстовых полей
+    public JTextField addTextField(JComponent container){
+        //Создаем текстовое поле
+        JTextField tf = new JTextField();
+        //устанавливаем его максимально допустимый размер
+        tf.setMaximumSize(new Dimension(150,20));
+        
+        //добавляем текстовое поле на панель
+        container.add(tf);
+        //возвращаем ссылку на текстовое поле
+        return tf;
+    }
+    
+    //метод добавления кнопок
+    public JButton addButton(JComponent container, String name){
+        //Создаем кнопку
+        JButton btn = new JButton(name);
+        //Устанавливаем максимально допустимый размер
+        btn.setMaximumSize(new Dimension(100,20));
+        //Выравниваем по горизонтали по центру
+        btn.setHorizontalAlignment(JButton.CENTER);
+        
+        //добавляем кнопку на панель
+        container.add(btn);
+        //возвращаем ссылку на кнопку
+        return btn;
+    }
+    
+    
+    //метод расчета зарплаты
+    public void calcSalary() throws Exception{
+        double stavka = Double.valueOf(arrTf[0].getText()); //ставка
+        double hours = Double.valueOf(arrTf[1].getText()); //часы работы
+        double days = Double.valueOf(arrTf[2].getText()); //дни работы
+        double pribil = stavka * hours * days; //расчет прибыли
+        arrTf[3].setText(String.format("%.2f", pribil)); //выводим прибыль в 5-е текстовое поле
+    }
+
+    /*
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new SalaryCalcjunior();
+            }
+        });
+    }
+    */
+
+    //Метод обработки события нажатия на кнопку
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        //узнаем имя кнопки, на которую нажали
+        if (e.getActionCommand().equals("Расчет")) {
+            try {
+                //выполняем расчет зарплаты
+               calcSalary();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Проверьте правильность ввода");
+            }
+            
+        }else{
+            //выходим
+        	System.exit(0);
+            }
+        }
+        
+    }
